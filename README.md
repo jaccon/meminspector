@@ -1,263 +1,248 @@
 # 🔍 MemInspector
 
-Inspetor de Memória para macOS - Ferramenta para analisar o consumo de memória de aplicações e threads.
+Memory Inspector for macOS - A powerful tool to analyze memory consumption of applications and threads.
 
-## 📋 Descrição
+> **NEW:** Swift native version available with **zero dependencies** and **93KB binary size**! 🚀
 
-MemInspector é uma aplicação Python que permite inspecionar e analisar o consumo de memória das aplicações em execução no macOS. A ferramenta oferece:
+## 🌟 Two Versions Available
 
-- 📊 Lista dos processos que mais consomem memória
-- 🧵 Análise detalhada das threads de cada processo
-- 💻 Resumo do sistema (memória total, disponível, swap, etc.)
-- 📈 Interface com barras de progresso usando tqdm
-- 📉 Gráficos em tempo real
-- 🔄 Modo de atualização contínua
+### 🦅 Swift Native Version (Recommended)
+- ✅ **Zero dependencies** - Native macOS binary
+- ✅ **High performance** - ~10ms startup time
+- ✅ **Tiny binary** - Only 93KB
+- ✅ **Native APIs** - Direct system integration
+- ✅ **Easy distribution** - Single executable
 
-## 🚀 Instalação
+### 🐍 Python Version
+- ✅ **Rich features** - matplotlib graphs, Docker monitoring
+- ✅ **Cross-platform** - Works on any OS with Python
+- ✅ **Extensible** - Easy to customize
 
-### Opção 1: Via Homebrew (Recomendado)
+## 📦 Installation
 
-```bash
-# Adicionar tap (após publicação)
-brew tap yourusername/tap
-brew install meminspector
-
-# Executar
-meminspector --help
-```
-
-Para instruções completas sobre como preparar o pacote Homebrew, veja [HOMEBREW_GUIDE.md](HOMEBREW_GUIDE.md).
-
-### Opção 2: Via pip
+### Swift Version (Recommended)
 
 ```bash
-# Instalar do repositório
-pip install git+https://github.com/yourusername/meminspector.git
+# Via Homebrew
+brew install jaccon/tap/meminspector-swift
 
-# Ou instalar localmente
-git clone https://github.com/yourusername/meminspector.git
-cd meminspector
-pip install -e .
+# Or build from source
+cd swift-version
+swift build -c release
+cp .build/release/MemInspector /usr/local/bin/meminspector
 ```
 
-### Opção 3: Manual
-
-### Opção 3: Manual
-
-### Pré-requisitos
-
-- Python 3.7 ou superior
-- macOS (testado em macOS 10.15+)
-
-### Passos de instalação
-
-1. Clone ou faça download deste projeto
-
-2. Instale as dependências:
+### Python Version
 
 ```bash
-pip install -r requirements.txt
+# Via Homebrew
+brew install jaccon/tap/meminspector
+
+# Via pip
+pip install git+https://github.com/jaccon/meminspector.git
 ```
 
-Ou instale manualmente:
+## 🚀 Quick Start
 
 ```bash
-pip install psutil tqdm
+# List all processes
+meminspector
+
+# Colored terminal UI (recommended)
+meminspector --tui
+
+# Continuous refresh mode
+meminspector --refresh
+
+# ASCII graphs
+meminspector --graph -t 15
+
+# Show top 30 processes
+meminspector --tui -t 30
 ```
 
-## 📖 Como usar
+## 📊 Features
 
-### Instalado via Homebrew ou pip:
+### Common Features (Both Versions)
+- 📊 Process memory usage sorted by consumption
+- 🧵 Thread information for each process
+- 💻 System memory statistics (total, available, swap)
+- 🎨 Colored terminal output
+- 🔄 Real-time refresh mode
+- 📈 ASCII progress bars and graphs
+
+### Python Version Only
+- 📉 Interactive matplotlib graphs
+- 🐳 Docker container monitoring
+- 🔍 Advanced thread analysis
+
+### Swift Version Only
+- ⚡ Native performance (~10ms startup)
+- 📦 No dependencies required
+- 🪶 Ultra-small binary (93KB)
+- 🍎 Direct macOS API access
+
+## 📖 Usage
+
+### Command Line Options
+
+```
+OPTIONS:
+    -h, --help              Show help message
+    -l, --list              List all processes (default mode)
+    --tui                   Colored terminal interface (recommended)
+    -r, --refresh           Continuous refresh mode
+    -g, --graph             Show graphs (ASCII for Swift, matplotlib for Python)
+    -t, --top N             Number of top processes to show (default: 20)
+    -i, --interval N        Update interval in seconds (default: 2.0)
+```
+
+### Examples
 
 ```bash
-meminspector              # Lista todos os processos
-meminspector --graph      # Mostra gráficos em tempo real
-meminspector --refresh    # Atualização contínua no terminal
-```
-
-### Executando manualmente:
-
-### Executando manualmente:
-
-Execute o script principal:
-
-```bash
-python3 meminspector.py
-```
-
-Ou torne-o executável:
-
-```bash
-chmod +x meminspector.py
-./meminspector.py
-```
-
-### Para usuários com permissões limitadas
-
-Alguns processos do sistema podem requerer privilégios elevados. Para análise completa, execute com sudo:
-
-```bash
-sudo python meminspector.py
-```
-
-## 📊 Saída
-
-A aplicação oferece três modos de operação:
-
-### Modo Lista (--list ou padrão)
-1. **Resumo do Sistema**: Informações sobre memória total, disponível, usada e swap
-2. **Todos os Processos**: Lista completa dos processos ordenados por consumo de memória, incluindo:
-   - PID (Process ID)
-   - Nome do processo
-   - Memória RSS (Resident Set Size)
-   - Porcentagem de memória utilizada
-   - Número de threads
-   - Status do processo
-3. **Análise de Threads**: Detalhamento das threads dos top 5 processos, mostrando:
-   - Thread ID
-   - Tempo de CPU do usuário
-   - Tempo de CPU do sistema
-   - Tempo total de CPU
-
-### Modo Gráfico (--graph)
-- Gráfico de linha mostrando uso de memória do sistema ao longo do tempo
-- Gráfico de barras com os top N processos em tempo real
-- Atualização automática em intervalos configuráveis
-
-### Modo Refresh (--refresh)
-- Atualização contínua no terminal
-- Limpa a tela e mostra dados atualizados
-- Ideal para monitoramento prolongado
-
-## 🛠️ Funcionalidades
-
-### Principais recursos
-
-- ✅ Compatível com macOS
-- ✅ Três modos de operação (lista, gráfico, refresh)
-- ✅ Interface com barras de progresso (tqdm)
-- ✅ Gráficos em tempo real com matplotlib
-- ✅ Formatação legível de bytes (B, KB, MB, GB, TB)
-- ✅ Ordenação automática por consumo de memória
-- ✅ Análise de threads por processo
-- ✅ Tratamento de erros para processos inacessíveis
-- ✅ Interrupção segura (Ctrl+C)
-- ✅ Argumentos de linha de comando configuráveis
-
-### Opções de linha de comando
-
-```
-  -l, --list          Lista todos os processos (modo padrão)
-  -g, --graph         Mostra gráficos em tempo real
-  -r, --refresh       Atualização contínua no terminal
-  -t, --top N         Número de processos a exibir (padrão: 10 para graph/refresh)
-  -i, --interval N    Intervalo de atualização em segundos (padrão: 2.0)
-  -a, --analyze N     Número de processos para análise de threads (padrão: 5)
-```
-
-### Exemplos de uso
-
-```bash
-# Lista todos os processos uma vez
+# List all processes
 meminspector
 meminspector --list
 
-# Gráficos em tempo real
-meminspector --graph
-meminspector -g -t 15 -i 1    # Top 15, atualiza a cada 1 segundo
+# Colored TUI mode
+meminspector --tui
+meminspector --tui -t 30        # Top 30 processes
 
-# Refresh contínuo no terminal
+# Continuous refresh
 meminspector --refresh
-meminspector -r -t 20 -i 3    # Top 20, atualiza a cada 3 segundos
+meminspector -r -t 20 -i 3      # Top 20, refresh every 3s
 
-# Modo lista com mais análises
-meminspector --list --analyze 10
+# Graphs
+meminspector --graph
+meminspector -g -t 15           # Top 15 with graphs
 ```
 
-## 📦 Dependências
+## 🆚 Version Comparison
 
-- **psutil**: Biblioteca para obter informações de processos e sistema
-- **tqdm**: Biblioteca para criar barras de progresso
-- **matplotlib**: Biblioteca para criar gráficos em tempo real
+| Feature | Swift Native | Python |
+|---------|-------------|---------|
+| **Startup Time** | ~10ms | ~500ms |
+| **Memory Usage** | ~5MB | ~50MB |
+| **Binary Size** | 93KB | N/A (interpreter) |
+| **Dependencies** | 0 | 5+ packages |
+| **Installation** | Single binary | pip/brew |
+| **Performance** | Native | Interpreted |
+| **matplotlib Graphs** | ❌ (ASCII only) | ✅ |
+| **Docker Monitoring** | ❌ | ✅ |
+| **Platform** | macOS only | Cross-platform |
 
-## 🔧 Desenvolvimento
+## 🛠️ Development
 
-### Instalar em modo desenvolvimento
+### Swift Version
 
 ```bash
-git clone https://github.com/yourusername/meminspector.git
-cd meminspector
+cd swift-version
+
+# Build
+swift build
+
+# Run
+swift run
+
+# Release build
+swift build -c release
+
+# Test
+.build/release/MemInspector --tui
+```
+
+### Python Version
+
+```bash
+# Install in development mode
 pip install -e .
+
+# Run directly
+python3 meminspector.py --tui
 ```
 
-### Criar distribuição
+## 📝 Technical Details
+
+### Swift Version Architecture
+- Uses native Darwin/Mach APIs
+- Direct access to `task_info`, `vm_statistics64`
+- Process enumeration via `proc_listallpids`
+- Thread counting with `task_threads`
+- Zero external dependencies
+
+### Python Version Architecture
+- Built on `psutil` for system info
+- `rich` for terminal UI
+- `matplotlib` for interactive graphs (optional)
+- `docker` for container monitoring (optional)
+
+## 🐛 Troubleshooting
+
+### Permission Errors
+
+Some system processes require elevated privileges:
 
 ```bash
-# Instalar ferramentas de build
-pip install build twine
+# Python version
+sudo meminspector
 
-# Criar distribuição
-python -m build
-
-# Upload para PyPI (quando pronto)
-twine upload dist/*
+# Swift version
+sudo meminspector
 ```
 
-### Publicar no Homebrew
+### Swift Version Not Found
 
-Veja o guia completo em [HOMEBREW_GUIDE.md](HOMEBREW_GUIDE.md)
-
-## 🔧 Personalização
-
-Você pode ajustar os parâmetros na linha de comando ou modificando o código:
-
-```python
-inspector.run(
-    top_processes=None,      # None = todos, ou especifique um número
-    analyze_threads_count=5  # Número de processos para análise de threads
-)
-```
-
-## 📝 Licença
-
-Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
-
-- Alguns processos do sistema podem não ser acessíveis sem privilégios de administrador
-- A análise pode levar alguns segundos dependendo do número de processos em execução
-- O consumo de CPU durante a análise é mínimo devido aos delays implementados
-
-## 🐛 Solução de Problemas
-
-### Erro de permissão
-
-Se você receber erros de "Access Denied", execute com sudo:
+Make sure the binary is in your PATH:
 
 ```bash
-sudo python meminspector.py
+# Check installation
+which meminspector
+
+# Manual installation
+cp .build/release/MemInspector /usr/local/bin/meminspector
+chmod +x /usr/local/bin/meminspector
 ```
 
-### Módulos não encontrados
-
-Certifique-se de que instalou todas as dependências:
+### Python Dependencies
 
 ```bash
+# Install all dependencies
 pip install -r requirements.txt
+
+# Core dependencies only (without matplotlib)
+pip install psutil tqdm rich docker
 ```
 
-## 📝 Licença
+## 🎯 Which Version Should I Use?
 
-Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
+**Use Swift Native if you want:**
+- ✅ Maximum performance
+- ✅ No dependencies to manage
+- ✅ Smallest footprint
+- ✅ macOS-only usage
 
-## ⚠️ Avisos
+**Use Python if you need:**
+- ✅ Interactive matplotlib graphs
+- ✅ Docker container monitoring
+- ✅ Cross-platform support
+- ✅ Easy customization
 
-## 🤝 Contribuições
+## 📄 License
 
-Sugestões e melhorias são bem-vindas!
+MIT License - See LICENSE file for details
 
-## 📧 Contato
+## 👨‍💻 Author
 
-Para questões ou sugestões, abra uma issue no repositório.
+**Developed by Jaccon**
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📧 Support
+
+For questions or issues, please open an issue on GitHub.
 
 ---
 
-Desenvolvido com ❤️ para macOS
+**⭐ If you find this tool useful, please give it a star on GitHub!**
