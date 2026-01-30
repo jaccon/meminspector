@@ -10,8 +10,6 @@ from tqdm import tqdm
 from collections import defaultdict
 import time
 import argparse
-import matplotlib.pyplot as plt
-import matplotlib.animation as animation
 from datetime import datetime
 from rich.console import Console
 from rich.table import Table
@@ -342,6 +340,14 @@ class MemInspector:
     
     def run_realtime_graph(self, top_n=10, update_interval=2000):
         """Runs real-time graph visualization"""
+        try:
+            import matplotlib.pyplot as plt
+            import matplotlib.animation as animation
+        except ImportError:
+            print("Error: matplotlib is required for graph mode.")
+            print("Install it with: pip install matplotlib")
+            sys.exit(1)
+            
         print("="*100)
         print("MemInspector - Real-Time Memory Monitor")
         print("="*100)
