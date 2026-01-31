@@ -15,13 +15,26 @@ Memory Inspector for macOS - A powerful tool to analyze memory consumption of ap
 
 ## 📦 Installation
 
-**Via pip:**
+### Option 1: Homebrew (Recommended for macOS)
+
+```bash
+# Add the tap (first time only)
+brew tap jaccon/tap
+
+# Install meminspector
+brew install jaccon/tap/meminspector
+
+# Or in one command
+brew install jaccon/tap/meminspector
+```
+
+### Option 2: Via pip
 
 ```bash
 pip install git+https://github.com/jaccon/meminspector.git
 ```
 
-**Manual Installation:**
+### Option 3: Manual Installation
 
 ```bash
 git clone https://github.com/jaccon/meminspector.git
@@ -29,7 +42,7 @@ cd meminspector
 pip install -e .
 ```
 
-**Dependencies:**
+**Dependencies (installed automatically):**
 
 ```bash
 pip install -r requirements.txt
