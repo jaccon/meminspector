@@ -20,26 +20,47 @@ Memory Inspector for macOS - A powerful tool to analyze memory consumption of ap
 
 ## 📦 Installation
 
-### Swift Version (Recommended)
+### Swift Version (Recommended for macOS users)
+
+**Quick Install (requires Swift compiler):**
 
 ```bash
-# Via Homebrew
-brew install jaccon/tap/meminspector-swift
-
-# Or build from source
-cd swift-version
-swift build -c release
-cp .build/release/MemInspector /usr/local/bin/meminspector
+curl -fsSL https://raw.githubusercontent.com/jaccon/meminspector/main/swift-version/install.sh | bash
 ```
+
+**Manual Build:**
+
+```bash
+git clone https://github.com/jaccon/meminspector.git
+cd meminspector/swift-version
+swift build -c release
+sudo cp .build/release/MemInspector /usr/local/bin/meminspector
+```
+
+**Requirements:**
+- Swift compiler (install with `xcode-select --install` or Xcode.app)
+- macOS 12.0 or later
 
 ### Python Version
 
-```bash
-# Via Homebrew
-brew install jaccon/tap/meminspector
+**Via Homebrew:**
 
-# Via pip
+```bash
+brew install jaccon/tap/meminspector
+```
+
+**Via pip:**
+
+```bash
 pip install git+https://github.com/jaccon/meminspector.git
+```
+
+**Manual:**
+
+```bash
+git clone https://github.com/jaccon/meminspector.git
+cd meminspector
+pip install -e .
 ```
 
 ## 🚀 Quick Start
