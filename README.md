@@ -1,53 +1,19 @@
 # 🔍 MemInspector
 
-Memory Inspector for macOS - A powerful tool to analyze memory consumption of applications and threads.
+Memory Inspector for macOS - A powerful tool to analyze memory consumption of applications and threads with beautiful visualizations.
 
-> **NEW:** Swift native version available with **zero dependencies** and **93KB binary size**! 🚀
+## ✨ Features
 
-## 🌟 Two Versions Available
-
-### 🦅 Swift Native Version (Recommended)
-- ✅ **Zero dependencies** - Native macOS binary
-- ✅ **High performance** - ~10ms startup time
-- ✅ **Tiny binary** - Only 93KB
-- ✅ **Native APIs** - Direct system integration
-- ✅ **Easy distribution** - Single executable
-
-### 🐍 Python Version
-- ✅ **Rich features** - matplotlib graphs, Docker monitoring
-- ✅ **Cross-platform** - Works on any OS with Python
-- ✅ **Extensible** - Easy to customize
+- 📊 **Real-time Process Monitoring** - Track memory usage of all running processes
+- 🎨 **Beautiful Terminal UI** - Colored, interactive terminal interface
+- 📉 **Interactive Graphs** - matplotlib-powered real-time visualization
+- 🐳 **Docker Support** - Monitor container memory consumption
+- 🧵 **Thread Analysis** - Detailed thread information for each process
+- 💻 **System Statistics** - Complete memory and swap information
+- 🔄 **Auto-refresh Mode** - Continuous monitoring with customizable intervals
+- 📈 **ASCII Graphs** - Terminal-based memory usage charts
 
 ## 📦 Installation
-
-### Swift Version (Recommended for macOS users)
-
-**Quick Install (requires Swift compiler):**
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/jaccon/meminspector/main/swift-version/install.sh | bash
-```
-
-**Manual Build:**
-
-```bash
-git clone https://github.com/jaccon/meminspector.git
-cd meminspector/swift-version
-swift build -c release
-sudo cp .build/release/MemInspector /usr/local/bin/meminspector
-```
-
-**Requirements:**
-- Swift compiler (install with `xcode-select --install` or Xcode.app)
-- macOS 12.0 or later
-
-### Python Version
-
-**Via Homebrew:**
-
-```bash
-brew install jaccon/tap/meminspector
-```
 
 **Via pip:**
 
@@ -55,7 +21,7 @@ brew install jaccon/tap/meminspector
 pip install git+https://github.com/jaccon/meminspector.git
 ```
 
-**Manual:**
+**Manual Installation:**
 
 ```bash
 git clone https://github.com/jaccon/meminspector.git
@@ -63,45 +29,33 @@ cd meminspector
 pip install -e .
 ```
 
+**Dependencies:**
+
+```bash
+pip install -r requirements.txt
+```
+
 ## 🚀 Quick Start
 
 ```bash
-# List all processes
-meminspector
-
-# Colored terminal UI (recommended)
+# Interactive colored terminal UI (recommended)
 meminspector --tui
+
+# Real-time graphs with matplotlib
+meminspector --graph
 
 # Continuous refresh mode
 meminspector --refresh
 
-# ASCII graphs
-meminspector --graph -t 15
+# List all processes (single snapshot)
+meminspector --list
 
-# Show top 30 processes
+# Show top 30 processes in TUI
 meminspector --tui -t 30
+
+# Graphs with custom refresh interval
+meminspector --graph -t 15 -i 1
 ```
-
-## 📊 Features
-
-### Common Features (Both Versions)
-- 📊 Process memory usage sorted by consumption
-- 🧵 Thread information for each process
-- 💻 System memory statistics (total, available, swap)
-- 🎨 Colored terminal output
-- 🔄 Real-time refresh mode
-- 📈 ASCII progress bars and graphs
-
-### Python Version Only
-- 📉 Interactive matplotlib graphs
-- 🐳 Docker container monitoring
-- 🔍 Advanced thread analysis
-
-### Swift Version Only
-- ⚡ Native performance (~10ms startup)
-- 📦 No dependencies required
-- 🪶 Ultra-small binary (93KB)
-- 🍎 Direct macOS API access
 
 ## 📖 Usage
 
@@ -113,89 +67,130 @@ OPTIONS:
     -l, --list              List all processes (default mode)
     --tui                   Colored terminal interface (recommended)
     -r, --refresh           Continuous refresh mode
-    -g, --graph             Show graphs (ASCII for Swift, matplotlib for Python)
+    -g, --graph             Show interactive matplotlib graphs
     -t, --top N             Number of top processes to show (default: 20)
     -i, --interval N        Update interval in seconds (default: 2.0)
+    -a, --analyze N         Number of processes to analyze threads (default: 5)
 ```
 
-### Examples
+### Usage Modes
+
+#### 1. Terminal UI Mode (Recommended)
+Beautiful, colored interface with real-time updates:
 
 ```bash
-# List all processes
-meminspector
-meminspector --list
-
-# Colored TUI mode
 meminspector --tui
-meminspector --tui -t 30        # Top 30 processes
-
-# Continuous refresh
-meminspector --refresh
-meminspector -r -t 20 -i 3      # Top 20, refresh every 3s
-
-# Graphs
-meminspector --graph
-meminspector -g -t 15           # Top 15 with graphs
+meminspector --tui -t 30        # Show top 30 processes
+meminspector --tui -i 1         # Update every second
 ```
 
-## 🆚 Version Comparison
+Features:
+- Color-coded memory usage
+- Live system statistics
+- Docker container monitoring (if available)
+- ASCII memory trend graph
+- Keyboard navigation (q or ESC to quit)
 
-| Feature | Swift Native | Python |
-|---------|-------------|---------|
-| **Startup Time** | ~10ms | ~500ms |
-| **Memory Usage** | ~5MB | ~50MB |
-| **Binary Size** | 93KB | N/A (interpreter) |
-| **Dependencies** | 0 | 5+ packages |
-| **Installation** | Single binary | pip/brew |
-| **Performance** | Native | Interpreted |
-| **matplotlib Graphs** | ❌ (ASCII only) | ✅ |
-| **Docker Monitoring** | ❌ | ✅ |
-| **Platform** | macOS only | Cross-platform |
+#### 2. Graph Mode
+Interactive matplotlib visualizations:
+
+```bash
+meminspector --graph
+meminspector -g -t 15           # Top 15 processes
+meminspector -g -i 3            # Update every 3 seconds
+```
+
+Displays:
+- System memory usage over time
+- Top N processes by memory consumption
+- Real-time updates
+
+#### 3. Refresh Mode
+Continuous terminal updates:
+
+```bash
+meminspector --refresh
+meminspector -r -t 20 -i 5      # Top 20, refresh every 5s
+```
+
+#### 4. List Mode
+Single snapshot of all processes:
+
+```bash
+meminspector
+meminspector --list
+meminspector -l -a 10           # Analyze threads of top 10
+```
+
+## 📊 Screenshots
+
+### Terminal UI Mode
+```
+╭─────────────────────────────────────────────────────────────╮
+│ MemInspector | 2026-01-31 15:30:45 | Total Processes: 342 │
+╰─────────────────────────────────────────────────────────────╯
+
+╭─ Top 20 Processes by Memory Usage ─────────────────────────╮
+│ #   PID      Name                     Memory      %        │
+│ 1   1234     Google Chrome            2.45 GB    15.20%   │
+│ 2   5678     Docker Desktop           1.82 GB    11.30%   │
+│ 3   9012     VSCode                   1.45 GB     9.00%   │
+│ ...                                                        │
+╰────────────────────────────────────────────────────────────╯
+
+╭─ System Memory ────────────────────────────────────────────╮
+│ Total Memory      16.00 GB                                 │
+│ Used Memory       12.45 GB (77.8%)  ████████████████░░░░░  │
+│ Available         3.55 GB                                  │
+╰────────────────────────────────────────────────────────────╯
+```
+
+### Graph Mode
+Real-time matplotlib graphs showing:
+- Memory usage trends over time
+- Top processes comparison
+- System statistics
+
+## 🐳 Docker Support
+
+MemInspector automatically detects and monitors Docker containers if Docker is running:
+
+```bash
+# Docker will be monitored automatically in TUI mode
+meminspector --tui
+```
+
+Requirements:
+- Docker Desktop running
+- `docker` Python package installed (`pip install docker`)
 
 ## 🛠️ Development
 
-### Swift Version
-
 ```bash
-cd swift-version
+# Clone repository
+git clone https://github.com/jaccon/meminspector.git
+cd meminspector
 
-# Build
-swift build
-
-# Run
-swift run
-
-# Release build
-swift build -c release
-
-# Test
-.build/release/MemInspector --tui
-```
-
-### Python Version
-
-```bash
 # Install in development mode
 pip install -e .
 
-# Run directly
+# Run directly from source
 python3 meminspector.py --tui
+
+# Install dev dependencies
+pip install -r requirements.txt
 ```
 
-## 📝 Technical Details
+## 📋 Requirements
 
-### Swift Version Architecture
-- Uses native Darwin/Mach APIs
-- Direct access to `task_info`, `vm_statistics64`
-- Process enumeration via `proc_listallpids`
-- Thread counting with `task_threads`
-- Zero external dependencies
-
-### Python Version Architecture
-- Built on `psutil` for system info
-- `rich` for terminal UI
-- `matplotlib` for interactive graphs (optional)
-- `docker` for container monitoring (optional)
+- Python 3.7+
+- macOS (primary support) or Linux
+- Dependencies:
+  - `psutil` - Process and system monitoring
+  - `rich` - Terminal UI components
+  - `tqdm` - Progress bars
+  - `matplotlib` - Graph visualization (optional)
+  - `docker` - Docker monitoring (optional)
 
 ## 🐛 Troubleshooting
 
@@ -204,49 +199,39 @@ python3 meminspector.py --tui
 Some system processes require elevated privileges:
 
 ```bash
-# Python version
-sudo meminspector
-
-# Swift version
-sudo meminspector
+sudo meminspector --tui
 ```
 
-### Swift Version Not Found
+### Missing matplotlib
 
-Make sure the binary is in your PATH:
+If graphs don't work:
 
 ```bash
-# Check installation
-which meminspector
-
-# Manual installation
-cp .build/release/MemInspector /usr/local/bin/meminspector
-chmod +x /usr/local/bin/meminspector
+pip install matplotlib
 ```
 
-### Python Dependencies
+### Docker Connection Issues
+
+If Docker monitoring fails:
+- Make sure Docker Desktop is running
+- Install docker package: `pip install docker`
+- Check Docker daemon: `docker ps`
+
+### Import Errors
+
+Install all dependencies:
 
 ```bash
-# Install all dependencies
 pip install -r requirements.txt
-
-# Core dependencies only (without matplotlib)
-pip install psutil tqdm rich docker
 ```
 
-## 🎯 Which Version Should I Use?
+## 🎯 Use Cases
 
-**Use Swift Native if you want:**
-- ✅ Maximum performance
-- ✅ No dependencies to manage
-- ✅ Smallest footprint
-- ✅ macOS-only usage
-
-**Use Python if you need:**
-- ✅ Interactive matplotlib graphs
-- ✅ Docker container monitoring
-- ✅ Cross-platform support
-- ✅ Easy customization
+- **Development** - Monitor memory leaks during development
+- **DevOps** - Track container memory usage
+- **System Admin** - Identify memory-hungry processes
+- **Performance Testing** - Analyze application memory consumption
+- **Learning** - Understand system resource usage
 
 ## 📄 License
 
@@ -255,10 +240,23 @@ MIT License - See LICENSE file for details
 ## 👨‍💻 Author
 
 **Developed by Jaccon**
+- GitHub: [@jaccon](https://github.com/jaccon)
 
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 🙏 Acknowledgments
+
+- Built with [psutil](https://github.com/giampaolo/psutil)
+- UI powered by [rich](https://github.com/Textualize/rich)
+- Graphs using [matplotlib](https://matplotlib.org/)
 
 ## 📧 Support
 

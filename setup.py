@@ -11,8 +11,8 @@ def read_file(filename):
 
 setup(
     name='meminspector',
-    version='1.1.1',
-    description='Memory Inspector for macOS - Analyze memory consumption of applications and threads',
+    version='2.0.0',
+    description='Memory Inspector for macOS - Analyze memory consumption with beautiful visualizations and graphs',
     long_description=read_file('README.md'),
     long_description_content_type='text/markdown',
     author='Jaccon',
@@ -26,8 +26,13 @@ setup(
         'psutil>=5.9.0',
         'tqdm>=4.65.0',
         'rich>=13.0.0',
-        'docker>=6.0.0',
+        'matplotlib>=3.5.0',
     ],
+    
+    extras_require={
+        'docker': ['docker>=6.0.0'],
+        'all': ['docker>=6.0.0', 'matplotlib>=3.5.0'],
+    },
     
     entry_points={
         'console_scripts': [
@@ -36,27 +41,30 @@ setup(
     },
     
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
         'Intended Audience :: System Administrators',
         'License :: OSI Approved :: MIT License',
         'Operating System :: MacOS',
+        'Operating System :: POSIX :: Linux',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
         'Topic :: System :: Monitoring',
+        'Topic :: System :: Systems Administration',
         'Topic :: Utilities',
     ],
     
     python_requires='>=3.7',
     
-    keywords='memory monitor macos inspector system profiling',
+    keywords='memory monitor macos inspector system profiling docker visualization graphs',
     
     project_urls={
-        'Bug Reports': 'https://github.com/yourusername/meminspector/issues',
-        'Source': 'https://github.com/yourusername/meminspector',
+        'Bug Reports': 'https://github.com/jaccon/meminspector/issues',
+        'Source': 'https://github.com/jaccon/meminspector',
     },
 )

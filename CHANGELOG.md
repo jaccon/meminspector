@@ -2,6 +2,40 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.0] - 2026-01-31
+
+### Breaking Changes
+- **Removed Swift Version** - Project now focuses exclusively on Python implementation
+  - Removed swift-version directory and all Swift code
+  - Removed Homebrew formula (meminspector.rb)
+  - Removed Homebrew documentation (HOMEBREW_GUIDE.md, HOMEBREW_PUBLISH.md, QUICKSTART_HOMEBREW.md)
+
+### Changed
+- **Updated README** - Complete rewrite focusing on Python version features
+  - Removed all Swift version references
+  - Enhanced documentation with better examples
+  - Added detailed usage modes and screenshots
+  - Improved installation instructions
+  - Added troubleshooting section
+- **Updated setup.py**
+  - Version bumped to 2.0.0
+  - Changed development status to "Production/Stable"
+  - Added matplotlib as core dependency
+  - Made docker an optional dependency
+  - Fixed GitHub URLs
+  - Added Python 3.12 support
+  - Enhanced keywords and descriptions
+- **Updated requirements.txt**
+  - Added matplotlib>=3.5.0 as required dependency
+
+### Improved
+- Documentation now focuses entirely on Python features:
+  - Terminal UI with Rich
+  - matplotlib graphs
+  - Docker monitoring
+  - Thread analysis
+- Better organization and clarity throughout documentation
+
 ## [1.1.0] - 2026-01-30
 
 ### Added
