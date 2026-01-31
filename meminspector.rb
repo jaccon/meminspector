@@ -4,7 +4,7 @@ class Meminspector < Formula
   desc "Memory Inspector for macOS - Analyze memory consumption with beautiful visualizations"
   homepage "https://github.com/jaccon/meminspector"
   url "https://github.com/jaccon/meminspector/archive/refs/tags/v2.0.0.tar.gz"
-  sha256 "" # Will be filled after creating the release
+  sha256 "0061d3a34a9b5ff551412c3fcce907fa46055bd43dff80d1349c400eca42a12a"
   license "MIT"
   head "https://github.com/jaccon/meminspector.git", branch: "main"
 
