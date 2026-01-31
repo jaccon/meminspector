@@ -126,14 +126,14 @@ class MemInspector:
         print(f"{'-'*100}")
         
         for idx, proc in enumerate(processes_to_show, 1):
-            pid = proc.get('pid', 'N/A')
-            name = proc.get('name', 'N/A')[:29]
+            pid = str(proc.get('pid', 'N/A'))
+            name = str(proc.get('name', 'N/A'))[:29]
             mem_info = proc.get('memory_info')
             rss = self.format_bytes(mem_info.rss) if mem_info else 'N/A'
-            mem_pct = proc.get('memory_percent', 0)
+            mem_pct = proc.get('memory_percent')
             mem_percent = f"{mem_pct:.2f}%" if mem_pct is not None else "0.00%"
-            num_threads = proc.get('num_threads', 0)
-            status = proc.get('status', 'N/A')
+            num_threads = str(proc.get('num_threads', 0) or 0)
+            status = str(proc.get('status') or 'N/A')
             
             print(f"{idx:<4} {pid:<8} {name:<30} {rss:<15} {mem_percent:<8} {num_threads:<8} {status:<12}")
     
