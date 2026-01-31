@@ -27,8 +27,8 @@ TMP_DIR=$(mktemp -d)
 cd "$TMP_DIR"
 
 echo "📥 Downloading source code..."
-curl -sL https://github.com/jaccon/meminspector/archive/refs/tags/v2.0.0.tar.gz | tar xz
-cd meminspector-2.0.0/swift-version
+curl -sL https://github.com/jaccon/meminspector/archive/refs/tags/v2.0.1.tar.gz | tar xz
+cd meminspector-2.0.1/swift-version
 
 echo "🔨 Building MemInspector..."
 swift build -c release
