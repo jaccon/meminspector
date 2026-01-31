@@ -46,9 +46,7 @@ class TerminalUI {
         printHeader("PROCESSES BY MEMORY USAGE (\(displayProcesses.count) processes)")
         
         // Header
-        let header = String(format: "%-5s %-8s %-35s %-15s %-10s %-8s %-12s",
-                          "#", "PID", "Name", "Memory", "% Mem", "Threads", "Status")
-        print(colored(header, color: .bold))
+        print(colored("#     PID      Name                                 Memory           % Mem      Threads  Status", color: .bold))
         print(String(repeating: "-", count: 100))
         
         // Processes
@@ -56,14 +54,13 @@ class TerminalUI {
             let color: Color = process.memoryPercent > 5.0 ? .red :
                               process.memoryPercent > 2.0 ? .yellow : .white
             
-            let row = String(format: "%-5d %-8d %-35s %-15s %-10s %-8d %-12s",
-                           index + 1,
-                           process.pid,
-                           String(process.name.prefix(35)),
-                           process.formattedMemory,
-                           String(format: "%.2f%%", process.memoryPercent),
-                           process.threadCount,
-                           process.status)
+            // Safely truncate and pad name
+            let displayName = process.name.count > 35 ? String(process.name.prefix(35)) : process.name
+            let paddedName = displayName.padding(toLength: 35, withPad: " ", startingAt: 0)
+            let paddedMem = process.formattedMemory.padding(toLength: 15, withPad: " ", startingAt: 0)
+            let percentStr = String(format: "%.2f%%", process.memoryPercent).padding(toLength: 10, withPad: " ", startingAt: 0)
+            
+            let row = "\(String(index + 1).padding(toLength: 5, withPad: " ", startingAt: 0)) \(String(process.pid).padding(toLength: 8, withPad: " ", startingAt: 0)) \(paddedName) \(paddedMem) \(percentStr) \(String(process.threadCount).padding(toLength: 8, withPad: " ", startingAt: 0)) \(process.status)"
             
             print(colored(row, color: color))
         }

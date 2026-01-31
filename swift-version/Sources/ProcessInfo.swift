@@ -83,8 +83,10 @@ class ProcessMonitor {
         let totalMemory = Double(systemMemory?.totalMemory ?? 1)
         
         for pid in pids where pid > 0 {
-            if let processInfo = getProcessInfo(pid: pid, totalMemory: totalMemory) {
-                processes.append(processInfo)
+            autoreleasepool {
+                if let processInfo = getProcessInfo(pid: pid, totalMemory: totalMemory) {
+                    processes.append(processInfo)
+                }
             }
         }
         
@@ -92,51 +94,33 @@ class ProcessMonitor {
     }
     
     private func getProcessInfo(pid: pid_t, totalMemory: Double) -> ProcessMemoryInfo? {
-        var taskInfo = task_vm_info_data_t()
-        var count = mach_msg_type_number_t(MemoryLayout<task_vm_info_data_t>.size / MemoryLayout<natural_t>.size)
+        // Use proc_pidinfo as primary method - safer and doesn't require special permissions
+        var pti = proc_taskinfo()
+        let size = proc_pidinfo(pid, PROC_PIDTASKINFO, 0, &pti, Int32(MemoryLayout<proc_taskinfo>.size))
         
-        var task: task_t = 0
-        var result = task_for_pid(mach_task_self_, pid, &task)
-        
-        guard result == KERN_SUCCESS else { return nil }
-        
-        result = withUnsafeMutablePointer(to: &taskInfo) {
-            $0.withMemoryRebound(to: integer_t.self, capacity: Int(count)) {
-                task_info(task, task_flavor_t(TASK_VM_INFO), $0, &count)
-            }
-        }
-        
-        guard result == KERN_SUCCESS else { return nil }
-        
-        let memoryBytes = UInt64(taskInfo.phys_footprint)
-        let memoryPercent = (Double(memoryBytes) / totalMemory) * 100
+        guard size == Int32(MemoryLayout<proc_taskinfo>.size) else { return nil }
         
         // Get process name
         let pathMaxSize = 4096
         var pathBuffer = [CChar](repeating: 0, count: pathMaxSize)
-        proc_pidpath(pid, &pathBuffer, UInt32(pathMaxSize))
+        let pathResult = proc_pidpath(pid, &pathBuffer, UInt32(pathMaxSize))
+        
+        guard pathResult > 0 else { return nil }
         
         let fullPath = String(cString: pathBuffer)
         let processName = (fullPath as NSString).lastPathComponent
         
-        // Get thread count
-        var threadList: thread_act_array_t?
-        var threadCount: mach_msg_type_number_t = 0
-        let threadResult = task_threads(task, &threadList, &threadCount)
+        guard !processName.isEmpty else { return nil }
         
-        let threads = threadResult == KERN_SUCCESS ? Int(threadCount) : 0
-        
-        // Clean up thread list
-        if let list = threadList {
-            vm_deallocate(mach_task_self_, vm_address_t(bitPattern: list), vm_size_t(threadCount) * vm_size_t(MemoryLayout<thread_t>.size))
-        }
+        let memoryBytes = pti.pti_resident_size
+        let memoryPercent = (Double(memoryBytes) / totalMemory) * 100
         
         return ProcessMemoryInfo(
             pid: pid,
-            name: processName.isEmpty ? "Unknown" : processName,
+            name: processName,
             memoryBytes: memoryBytes,
             memoryPercent: memoryPercent,
-            threadCount: threads,
+            threadCount: Int(pti.pti_threadnum),
             status: "running"
         )
     }
